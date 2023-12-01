@@ -1,22 +1,14 @@
 # Ankademin Quiz
 
- 
-
 # Beskrivning
 
 Du har fått i uppgift att skapa en quiz-applikation åt Ankademin. Användare ska kunna svara på frågor och få feedback på huruvida hen besvarat dessa rätt eller fel. Applikationen ska fungera utan några större buggar. Du väljer själv vilka frågor som quizet ska bestå utav.
 
 Du ska även ha ditt projekt på Github och pusha upp kod kontinuerligt under projektets gång.
 
- 
-
 # Kravsättning
 
- 
-
 ## Betyg G
-
- 
 
     Quizet innehåller 10 frågor. Frågorna består av sant/falskt påståenden med två möjliga svarsalternativ: Sant eller Falskt.
 
@@ -34,11 +26,7 @@ Du ska även ha ditt projekt på Github och pusha upp kod kontinuerligt under pr
 
     Du har gjort minst 8 commits till ditt Github-repository under projektets gång.
 
- 
-
 ## Betyg VG
-
- 
 
     Alla G-krav är uppfyllda
 
@@ -53,7 +41,5 @@ Du ska även ha ditt projekt på Github och pusha upp kod kontinuerligt under pr
     Användaren ska kunna se exakt vilka frågor hen besvarat rätt och/eller felaktigt när resultatet visas. (Om hen besvarat frågan fel, bestämmer du själv om du vill skriva ut det rätta svaret eller inte).
 
     Tekniskt krav: Koden följer “DRY”-principen (Dont repeat yourself), undviker större upprepningar av kod i logiken.
-
- 
 
 Bonus: Försök att snygga till quizet med CSS så att den ser lite mer användarvänlig ut!
