@@ -1,3 +1,36 @@
-h1 {
-  color: purple;
+* {
+  outline: 1px solid red;
+}
+
+.hide {
+  display: none;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+}
+main .quiz-wrapper {
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px 5px gray;
+  height: 80vh;
+  max-height: 80vh;
+  width: 50vh;
+  max-width: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+main .quiz-wrapper .quiz-question {
+  height: 10rem;
+  max-width: 20rem;
+}
+main .quiz-wrapper .quiz-answers {
+  height: 10rem;
+  max-width: 20rem;
+}
+main .quiz-wrapper .quiz-btns {
+  height: 10rem;
+  max-width: 20rem;
 }/*# sourceMappingURL=main.css.map */
