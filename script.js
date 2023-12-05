@@ -12,11 +12,11 @@ const pinkFloydQuiz = [
       "Which album features the iconic prism and rainbow artwork on its cover?",
     answers: [
       { option: "Dark Side of the Moon", right: true },
-      { option: "Dark Side of the Moon", right: true },
-      { option: "Dark Side of the Sun", right: false },
+      { option: "Wish You Were Here", right: false },
+      { option: "The Division Bell", right: false },
       { option: "The Wall", right: false },
     ],
-    type: "checkBox",
+    type: "multipleChoices",
   },
   {
     question: "What is the title of Pink Floyd's longest studio album?",
@@ -26,14 +26,17 @@ const pinkFloydQuiz = [
       { option: "The Division Bell", right: false },
       { option: "The Endless River", right: true },
     ],
-    type: "checkBox",
+    type: "multipleChoices",
   },
   {
-    question: "Who was the primary lyricist for Pink Floyd?",
+    question: "Which of the following played guitar in the band?",
     answers: [
-      { option: "Roger Waters", right: true },
-      { option: "David Gilmour", right: false },
+      { option: "Roger Waters", right: false },
+      { option: "David Gilmour", right: true },
+      { option: "Jimmy Page", right: false },
+      { option: "Syd Barrett", right: true },
     ],
+    type: "checkBox",
   },
   {
     question:
@@ -44,6 +47,7 @@ const pinkFloydQuiz = [
       { option: "Roger Waters", right: true },
       { option: "Richard Wright", right: false },
     ],
+    type: "multipleChoices",
   },
   {
     question:
@@ -51,22 +55,26 @@ const pinkFloydQuiz = [
     answers: [
       { option: "Comfortably Numb", right: true },
       { option: "Another Brick in the Wall (Part 2)", right: false },
+      { option: "See Emily Play", right: false },
     ],
+    type: "multipleChoices",
   },
   {
     question:
-      "What is the title of Pink Floyd's rock opera that explores themes of alienation and the impact of war?",
+      "Pink Floyd's rock opera 'The Wall' explores themes of alienation and the impact of war.",
     answers: [
-      { option: "Animals", right: false },
-      { option: "The Wall", right: true },
+      { option: "True", right: true },
+      { option: "False", right: false },
     ],
+    type: "trueFalse",
   },
   {
-    question: "Which Pink Floyd album cover features a flying pig?",
+    question: "The album cover of the album 'Meddle' features a flying pig?",
     answers: [
-      { option: "Animals", right: true },
-      { option: "Meddle", right: false },
+      { option: "True", right: false },
+      { option: "False", right: true },
     ],
+    type: "trueFalse",
   },
   {
     question: "What is the name of Pink Floyd's lead vocalist and guitarist?",
@@ -76,16 +84,17 @@ const pinkFloydQuiz = [
       { option: "David Gilmour", right: true },
       { option: "Nick Mason", right: false },
     ],
+    type: "multipleChoices",
   },
   {
-    question:
-      "Which Pink Floyd album is often considered a soundtrack to the film '2001: A Space Odyssey'?",
+    question: "Which of the following albums were released in the 1960s?",
     answers: [
       { option: "Atom Heart Mother", right: false },
-      { option: "The Piper at the Gates of Dawn", right: false },
-      { option: "Ummagumma", right: false },
-      { option: "Obscured by Clouds", right: true },
+      { option: "The Piper at the Gates of Dawn", right: true },
+      { option: "A Saucerful of Secrets", right: true },
+      { option: "The Dark Side of the Moon", right: false },
     ],
+    type: "checkBox",
   },
   {
     question: "You answered all questions!",
@@ -94,22 +103,19 @@ const pinkFloydQuiz = [
   },
 ];
 
+//selectors for buttons and containers
 const questionContainer = document.querySelector(".quiz-question");
 const answerContainer = document.querySelector(".quiz-answers");
 const alertContainer = document.querySelector(".alert-container");
 const startBtn = document.querySelector("#startBtn");
 const nextBtn = document.querySelector("#nextBtn");
 const resultBtn = document.querySelector("#resultBtn");
+
+//variables needed
 let getQuestionNumber = 0;
 let userScore = 0;
 let correctAnswers = [];
 let wrongAnswers = [];
-
-// pinkFloydQuiz.forEach((question) => {
-//   question.answers.forEach((option) => {
-//     if (option.right === true) console.log(option.option);
-//   });
-// });
 
 //function to turn a string into camelcase, copied from chat gpt, pray i dont need to use this
 function toCamelCase(inputString) {
@@ -132,6 +138,8 @@ let renderQuestion = (question) => {
   //function to create elements
   let createElements = (typeInput) => {
     question.answers.forEach((option) => {
+      let div = document.createElement("div");
+      div.classList.add("options-container");
       let label = document.createElement("label");
       let input = document.createElement("input");
       input.type = typeInput;
@@ -140,7 +148,8 @@ let renderQuestion = (question) => {
       input.value = option.right;
       label.htmlFor = input.id;
       label.innerText = option.option;
-      answerContainer.append(input, label);
+      answerContainer.append(div);
+      div.append(input, label);
     });
   };
   //render questions based on type
@@ -180,7 +189,11 @@ let getAnswers = () => {
       return index.value === "true";
     };
     //push question into corresponding array
-    if (chosenArray.every(checkTrue)) {
+    //TODO clear console logs
+    if (
+      chosenArray.every(checkTrue) &&
+      chosenArray.length === rightAnswers.length
+    ) {
       correctAnswers.push(pinkFloydQuiz[getQuestionNumber - 1]);
       //add to score counter
       userScore++;
@@ -191,8 +204,6 @@ let getAnswers = () => {
     }
     console.log(correctAnswers);
     console.log(wrongAnswers);
-    // console.log(chosenArray.every(checkTrue));
-    // console.log(chosenAnswer);
 
     //clear html and render next question
     questionContainer.innerHTML = "";
@@ -219,10 +230,23 @@ startBtn.addEventListener("click", () => {
 
 //next button event
 nextBtn.addEventListener("click", getAnswers);
+
+//show results function
+let showResults = (correct, wrong) => {
+  correct.forEach((answer) => {
+    console.log("du svarade rätt på");
+    console.log(answer.question);
+  });
+  wrong.forEach((answer) => {
+    console.log("du svarade fel på");
+    console.log(answer.question);
+  });
+};
+
 //result button event
 resultBtn.addEventListener("click", () => {
   questionContainer.innerHTML = "";
   answerContainer.innerHTML = "";
-  questionContainer.innerText =
-    "Du svarade rätt på 6 av 10 frågor, bra jobbat!";
+  questionContainer.innerText = `Du svarade rätt på ${userScore} av 10 frågor, bra jobbat!`;
+  showResults(correctAnswers, wrongAnswers);
 });

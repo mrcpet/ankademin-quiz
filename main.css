@@ -6,7 +6,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 }
 main .quiz-wrapper {
   border: 1px solid black;
@@ -27,6 +26,8 @@ main .quiz-wrapper .quiz-question {
 main .quiz-wrapper .quiz-answers {
   height: 10rem;
   max-width: 20rem;
+  display: flex;
+  flex-direction: column;
 }
 main .quiz-wrapper .quiz-btns {
   height: 10rem;

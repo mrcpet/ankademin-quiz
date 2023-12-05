@@ -9,7 +9,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
   .quiz-wrapper {
     border: 1px solid black;
     border-radius: 0.5rem;
@@ -28,6 +27,8 @@ main {
     .quiz-answers {
       height: 10rem;
       max-width: 20rem;
+      display: flex;
+      flex-direction: column;
     }
     .quiz-btns {
       height: 10rem;
