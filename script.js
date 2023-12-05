@@ -12,6 +12,8 @@ const pinkFloydQuiz = [
       "Which album features the iconic prism and rainbow artwork on its cover?",
     answers: [
       { option: "Dark Side of the Moon", right: true },
+      { option: "Dark Side of the Moon", right: true },
+      { option: "Dark Side of the Sun", right: false },
       { option: "The Wall", right: false },
     ],
     type: "checkBox",
@@ -24,7 +26,7 @@ const pinkFloydQuiz = [
       { option: "The Division Bell", right: false },
       { option: "The Endless River", right: true },
     ],
-    type: "multipleChoices",
+    type: "checkBox",
   },
   {
     question: "Who was the primary lyricist for Pink Floyd?",
@@ -85,15 +87,24 @@ const pinkFloydQuiz = [
       { option: "Obscured by Clouds", right: true },
     ],
   },
+  {
+    question: "You answered all questions!",
+    answers: [{ option: "See your results by pressing the button" }],
+    type: "last",
+  },
 ];
 
 const questionContainer = document.querySelector(".quiz-question");
 const answerContainer = document.querySelector(".quiz-answers");
+const alertContainer = document.querySelector(".alert-container");
 const startBtn = document.querySelector("#startBtn");
 const nextBtn = document.querySelector("#nextBtn");
 const resultBtn = document.querySelector("#resultBtn");
 let getQuestionNumber = 0;
-let userAnswers = [];
+let userScore = 0;
+let correctAnswers = [];
+let wrongAnswers = [];
+
 // pinkFloydQuiz.forEach((question) => {
 //   question.answers.forEach((option) => {
 //     if (option.right === true) console.log(option.option);
@@ -106,6 +117,11 @@ function toCamelCase(inputString) {
     .toLowerCase()
     .replace(/[-_\s]+(.)?/g, (_, c) => c.toUpperCase());
 }
+//function to check that all answers in array are true
+
+const onlyTrueAnswers = (element) => {
+  return element === "true";
+};
 
 //function to render question into DOM
 let renderQuestion = (question) => {
@@ -134,6 +150,10 @@ let renderQuestion = (question) => {
   } else if (question.type === "checkBox") {
     //render boxes
     createElements("checkbox");
+  } else if (question.type === "last") {
+    let h3 = document.createElement("h3");
+    h3.innerText = "Well done!";
+    questionContainer.append(h3);
   } else {
     //default render which is for type multipleChoices
     createElements("radio");
@@ -144,6 +164,51 @@ let getQuestion = (number) => {
   renderQuestion(pinkFloydQuiz[number]);
   return getQuestionNumber++;
 };
+//function to count score and store answers
+
+let getAnswers = () => {
+  // select all chosen answers and all correct answers
+  let chosenAnswer = document.querySelectorAll(
+    "input[type='checkbox']:checked, input[type='radio']:checked"
+  );
+  if (chosenAnswer.length !== 0) {
+    let rightAnswers = document.querySelectorAll("input[value='true']");
+    //turn node list into an array
+    let chosenArray = Array.from(chosenAnswer);
+    //function to check if value is "true"
+    const checkTrue = (index) => {
+      return index.value === "true";
+    };
+    //push question into corresponding array
+    if (chosenArray.every(checkTrue)) {
+      correctAnswers.push(pinkFloydQuiz[getQuestionNumber - 1]);
+      //add to score counter
+      userScore++;
+      console.log("rätt svar");
+    } else {
+      wrongAnswers.push(pinkFloydQuiz[getQuestionNumber - 1]);
+      console.log("fel svar");
+    }
+    console.log(correctAnswers);
+    console.log(wrongAnswers);
+    // console.log(chosenArray.every(checkTrue));
+    // console.log(chosenAnswer);
+
+    //clear html and render next question
+    questionContainer.innerHTML = "";
+    answerContainer.innerHTML = "";
+    getQuestion(getQuestionNumber);
+    console.log(getQuestionNumber);
+    if (getQuestionNumber === 11) {
+      nextBtn.removeEventListener("click", getAnswers);
+      nextBtn.classList.add("hide");
+      resultBtn.classList.remove("hide");
+    }
+  } else {
+    alert("Please pick your answer.");
+  }
+};
+
 //start button event
 startBtn.addEventListener("click", () => {
   renderQuestion(pinkFloydQuiz[0]);
@@ -151,29 +216,9 @@ startBtn.addEventListener("click", () => {
   nextBtn.classList.remove("hide");
   return getQuestionNumber++;
 });
-//next button event
-nextBtn.addEventListener("click", () => {
-  //take value from selected answer and store in userAnswers array
-  let chosenAnswer = document.querySelectorAll(
-    "input[type='checkbox']:checked, input[type='radio']:checked"
-  );
-  //TODO make sure the answer.value only gets pushed to userAnswers once if there are several correct answers, and only if ALL correct answers are selected
-  let rightAnswers = document.querySelectorAll("input[value='true']");
-  chosenAnswer.forEach((answer) => {
-    userAnswers.push(answer.value);
-  });
-  console.log(userAnswers);
-  console.log(rightAnswers);
 
-  //clear html and render next question
-  questionContainer.innerHTML = "";
-  answerContainer.innerHTML = "";
-  getQuestion(getQuestionNumber);
-  if (getQuestionNumber > 9) {
-    nextBtn.classList.add("hide");
-    resultBtn.classList.remove("hide");
-  }
-});
+//next button event
+nextBtn.addEventListener("click", getAnswers);
 //result button event
 resultBtn.addEventListener("click", () => {
   questionContainer.innerHTML = "";
