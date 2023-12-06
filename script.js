@@ -2,8 +2,8 @@ const pinkFloydQuiz = [
   {
     question: "Pink floyd was formed in 1965.",
     answers: [
-      { option: true, right: true },
-      { option: false, right: false },
+      { option: "True", right: true },
+      { option: "False", right: false },
     ],
     type: "trueFalse",
   },
@@ -98,7 +98,6 @@ const pinkFloydQuiz = [
   },
   {
     question: "You answered all questions!",
-    answers: [{ option: "See your results by pressing the button" }],
     type: "last",
   },
 ];
@@ -116,6 +115,7 @@ let getQuestionNumber = 0;
 let userScore = 0;
 let correctAnswers = [];
 let wrongAnswers = [];
+let wrongAnswersLabels = [];
 
 //function to turn a string into camelcase, copied from chat gpt, pray i dont need to use this
 function toCamelCase(inputString) {
@@ -123,10 +123,9 @@ function toCamelCase(inputString) {
     .toLowerCase()
     .replace(/[-_\s]+(.)?/g, (_, c) => c.toUpperCase());
 }
-//function to check that all answers in array are true
-
-const onlyTrueAnswers = (element) => {
-  return element === "true";
+//function to check if value is "true"
+const checkTrue = (index) => {
+  return index.value === "true";
 };
 
 //function to render question into DOM
@@ -161,20 +160,32 @@ let renderQuestion = (question) => {
     createElements("checkbox");
   } else if (question.type === "last") {
     let h3 = document.createElement("h3");
-    h3.innerText = "Well done!";
+    h3.innerText = "See your results by pressing the button below.";
     questionContainer.append(h3);
   } else {
     //default render which is for type multipleChoices
     createElements("radio");
   }
 };
+
 //function to render correct question based on current number
 let getQuestion = (number) => {
   renderQuestion(pinkFloydQuiz[number]);
   return getQuestionNumber++;
 };
-//function to count score and store answers
 
+//function to store wrong answer labels
+const storeLabel = (arrayInput, arrayOutput) => {
+  arrayInput.forEach((input) => {
+    let labels = input.labels;
+    if (labels.length > 0) {
+      let labelText = labels[0].innerText;
+      arrayOutput.push(labelText);
+    }
+  });
+};
+
+//function to count score and store answers
 let getAnswers = () => {
   // select all chosen answers and all correct answers
   let chosenAnswer = document.querySelectorAll(
@@ -184,10 +195,6 @@ let getAnswers = () => {
     let rightAnswers = document.querySelectorAll("input[value='true']");
     //turn node list into an array
     let chosenArray = Array.from(chosenAnswer);
-    //function to check if value is "true"
-    const checkTrue = (index) => {
-      return index.value === "true";
-    };
     //push question into corresponding array
     //TODO clear console logs
     if (
@@ -201,9 +208,19 @@ let getAnswers = () => {
     } else {
       wrongAnswers.push(pinkFloydQuiz[getQuestionNumber - 1]);
       console.log("fel svar");
+      if (chosenAnswer.length >= 2) {
+        //if several answers, save labels of picked answers in a separate array
+        let labelsArray = [];
+        storeLabel(chosenAnswer, labelsArray);
+        wrongAnswersLabels.push(labelsArray);
+      } else {
+        //save label of picked answer
+        storeLabel(chosenAnswer, wrongAnswersLabels);
+      }
     }
     console.log(correctAnswers);
     console.log(wrongAnswers);
+    console.log(wrongAnswersLabels);
 
     //clear html and render next question
     questionContainer.innerHTML = "";
@@ -220,6 +237,31 @@ let getAnswers = () => {
   }
 };
 
+//show results function
+let showResults = (correct, wrong) => {
+  let h2Correct = document.createElement("h2");
+  let ulCorrect = document.createElement("ul");
+  h2Correct.innerText = "Correct answers";
+  let h2Wrong = document.createElement("h2");
+  let ulWrong = document.createElement("ul");
+  h2Wrong.innerText = "Wrong answers";
+  questionContainer.append(h2Correct, ulCorrect, h2Wrong, ulWrong);
+  correct.forEach((answer) => {
+    let li = document.createElement("li");
+    li.innerText = `${answer.question}`;
+    ulCorrect.append(li);
+    console.log("du svarade rätt på");
+    console.log(answer.question);
+  });
+  wrong.forEach((answer) => {
+    let li = document.createElement("li");
+    li.innerText = `${answer.question}`;
+    ulWrong.append(li);
+    console.log("du svarade fel på");
+    console.log(answer.question);
+  });
+};
+
 //start button event
 startBtn.addEventListener("click", () => {
   renderQuestion(pinkFloydQuiz[0]);
@@ -230,18 +272,6 @@ startBtn.addEventListener("click", () => {
 
 //next button event
 nextBtn.addEventListener("click", getAnswers);
-
-//show results function
-let showResults = (correct, wrong) => {
-  correct.forEach((answer) => {
-    console.log("du svarade rätt på");
-    console.log(answer.question);
-  });
-  wrong.forEach((answer) => {
-    console.log("du svarade fel på");
-    console.log(answer.question);
-  });
-};
 
 //result button event
 resultBtn.addEventListener("click", () => {
