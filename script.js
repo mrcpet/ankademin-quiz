@@ -121,21 +121,21 @@ let wrongAnswersLabels = [];
 
 //reset quiz function
 const resetQuiz = () => {
-questionContainer.innerHTML = "";
-answerContainer.innerHTML = "";
-renderQuestion(pinkFloydQuiz[0]);
-startBtn.classList.add("hide");
-nextBtn.classList.remove("hide");
-restartBtn.classList.add("hide");
-resultBtn.classList.add("hide");
-getQuestionNumber = 0;
-userScore = 0;
-correctAnswers = [];
-wrongAnswers = [];
-wrongAnswersLabels = [];
-nextBtn.addEventListener("click", getAnswers);
-return getQuestionNumber++;
-}
+  questionContainer.innerHTML = "";
+  answerContainer.innerHTML = "";
+  renderQuestion(pinkFloydQuiz[0]);
+  startBtn.classList.add("hide");
+  nextBtn.classList.remove("hide");
+  restartBtn.classList.add("hide");
+  resultBtn.classList.add("hide");
+  getQuestionNumber = 0;
+  userScore = 0;
+  correctAnswers = [];
+  wrongAnswers = [];
+  wrongAnswersLabels = [];
+  nextBtn.addEventListener("click", getAnswers);
+  return getQuestionNumber++;
+};
 
 //function to turn a string into camelcase, copied from chat gpt, pray i dont need to use this
 function toCamelCase(inputString) {
@@ -260,16 +260,19 @@ let getAnswers = () => {
 let showOptions = (array, appendTarget) => {
   let filterAnswers = array.answers.filter((option) => option.right === true);
   filterAnswers.forEach((answer) => {
-    let span = document.createElement("p");
-    span.innerText = `Rätt svar: ${answer.option}`;
-    appendTarget.append(span);
+    let p = document.createElement("p");
+    p.innerText = `Correct answer: ${answer.option}`;
+    appendTarget.append(p);
+    if (p.parentElement.parentElement.classList.contains("ulCorrect")) {
+      p.classList.add("green");
+    }
     console.log(answer.option);
   });
 };
 //show results function
 let showResults = (correct, wrong) => {
   let p = document.createElement("p");
-  p.innerText = `Du svarade rätt på ${userScore} av 10 frågor.`;
+  p.innerText = `You answered correctly on ${userScore} out of 10 questions.`;
   if (userScore > 7.5) {
     p.classList.add("green");
   } else if (userScore > 5 && userScore < 7.5) {
@@ -280,9 +283,11 @@ let showResults = (correct, wrong) => {
   questionContainer.append(p);
   let h2Correct = document.createElement("h2");
   let ulCorrect = document.createElement("ul");
+  ulCorrect.classList.add("ulCorrect");
   h2Correct.innerText = "Correct answers";
   let h2Wrong = document.createElement("h2");
   let ulWrong = document.createElement("ul");
+  ulWrong.classList.add("ulWrong");
   h2Wrong.innerText = "Wrong answers";
   questionContainer.append(h2Correct, ulCorrect, h2Wrong, ulWrong);
   correct.forEach((answer) => {
@@ -293,14 +298,23 @@ let showResults = (correct, wrong) => {
     li.append(p);
     showOptions(answer, li);
   });
-  wrong.forEach((answer) => {
+  wrong.forEach((answer, index) => {
     let li = document.createElement("li");
     ulWrong.append(li);
     let p = document.createElement("p");
     p.innerText = `${answer.question}`;
     li.append(p);
     showOptions(answer, li);
+    let p2 = document.createElement("p");
+    p2.innerText = `Your answer: ${wrongAnswersLabels[index]}`;
+    p2.classList.add("red");
+    li.append(p2);
   });
+  // wrongAnswersLabels.forEach((answer) => {
+  //   let p = document.createElement("p");
+  //   p.innerText = answer;
+  //   ulWrong.append(p);
+  // })
 };
 
 //start button event
@@ -321,8 +335,10 @@ resultBtn.addEventListener("click", () => {
   showResults(correctAnswers, wrongAnswers);
   restartBtn.classList.remove("hide");
 });
+
 //restart button event
 restartBtn.addEventListener("click", resetQuiz);
+
 //dark mode event
 lightDarkBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
