@@ -107,8 +107,10 @@ const questionContainer = document.querySelector(".quiz-question");
 const answerContainer = document.querySelector(".quiz-answers");
 const alertContainer = document.querySelector(".alert-container");
 const startBtn = document.querySelector("#startBtn");
+const restartBtn = document.querySelector("#restartBtn");
 const nextBtn = document.querySelector("#nextBtn");
 const resultBtn = document.querySelector("#resultBtn");
+const lightDarkBtn = document.querySelector("#lightDarkBtn");
 
 //variables needed
 let getQuestionNumber = 0;
@@ -116,6 +118,24 @@ let userScore = 0;
 let correctAnswers = [];
 let wrongAnswers = [];
 let wrongAnswersLabels = [];
+
+//reset quiz function
+const resetQuiz = () => {
+questionContainer.innerHTML = "";
+answerContainer.innerHTML = "";
+renderQuestion(pinkFloydQuiz[0]);
+startBtn.classList.add("hide");
+nextBtn.classList.remove("hide");
+restartBtn.classList.add("hide");
+resultBtn.classList.add("hide");
+getQuestionNumber = 0;
+userScore = 0;
+correctAnswers = [];
+wrongAnswers = [];
+wrongAnswersLabels = [];
+nextBtn.addEventListener("click", getAnswers);
+return getQuestionNumber++;
+}
 
 //function to turn a string into camelcase, copied from chat gpt, pray i dont need to use this
 function toCamelCase(inputString) {
@@ -227,7 +247,7 @@ let getAnswers = () => {
     answerContainer.innerHTML = "";
     getQuestion(getQuestionNumber);
     console.log(getQuestionNumber);
-    if (getQuestionNumber === 11) {
+    if (getQuestionNumber === pinkFloydQuiz.length) {
       nextBtn.removeEventListener("click", getAnswers);
       nextBtn.classList.add("hide");
       resultBtn.classList.remove("hide");
@@ -236,9 +256,28 @@ let getAnswers = () => {
     alert("Please pick your answer.");
   }
 };
-
+//filter and show correct answers for each question in the list
+let showOptions = (array, appendTarget) => {
+  let filterAnswers = array.answers.filter((option) => option.right === true);
+  filterAnswers.forEach((answer) => {
+    let span = document.createElement("p");
+    span.innerText = `Rätt svar: ${answer.option}`;
+    appendTarget.append(span);
+    console.log(answer.option);
+  });
+};
 //show results function
 let showResults = (correct, wrong) => {
+  let p = document.createElement("p");
+  p.innerText = `Du svarade rätt på ${userScore} av 10 frågor.`;
+  if (userScore > 7.5) {
+    p.classList.add("green");
+  } else if (userScore > 5 && userScore < 7.5) {
+    p.classList.add("orange");
+  } else {
+    p.classList.add("red");
+  }
+  questionContainer.append(p);
   let h2Correct = document.createElement("h2");
   let ulCorrect = document.createElement("ul");
   h2Correct.innerText = "Correct answers";
@@ -248,17 +287,19 @@ let showResults = (correct, wrong) => {
   questionContainer.append(h2Correct, ulCorrect, h2Wrong, ulWrong);
   correct.forEach((answer) => {
     let li = document.createElement("li");
-    li.innerText = `${answer.question}`;
     ulCorrect.append(li);
-    console.log("du svarade rätt på");
-    console.log(answer.question);
+    let p = document.createElement("p");
+    p.innerText = `${answer.question}`;
+    li.append(p);
+    showOptions(answer, li);
   });
   wrong.forEach((answer) => {
     let li = document.createElement("li");
-    li.innerText = `${answer.question}`;
     ulWrong.append(li);
-    console.log("du svarade fel på");
-    console.log(answer.question);
+    let p = document.createElement("p");
+    p.innerText = `${answer.question}`;
+    li.append(p);
+    showOptions(answer, li);
   });
 };
 
@@ -277,6 +318,12 @@ nextBtn.addEventListener("click", getAnswers);
 resultBtn.addEventListener("click", () => {
   questionContainer.innerHTML = "";
   answerContainer.innerHTML = "";
-  questionContainer.innerText = `Du svarade rätt på ${userScore} av 10 frågor, bra jobbat!`;
   showResults(correctAnswers, wrongAnswers);
+  restartBtn.classList.remove("hide");
+});
+//restart button event
+restartBtn.addEventListener("click", resetQuiz);
+//dark mode event
+lightDarkBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
 });

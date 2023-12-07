@@ -5,6 +5,20 @@
 .hide {
   display: none;
 }
+.green {
+  color: green;
+}
+.orange {
+  color: orange;
+}
+.red {
+  color: red;
+}
+.dark-mode {
+  transition: background-color 0.25s, color 0.25s;
+  background-color: #000;
+  color: #fff;
+}
 main {
   display: flex;
   justify-content: center;
