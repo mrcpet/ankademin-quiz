@@ -121,7 +121,7 @@ const resultBtn = document.querySelector("#resultBtn");
 const lightDarkBtn = document.querySelector("#lightDarkBtn");
 
 //variables needed
-let getQuestionNumber = 0;
+let questionNumber = 0;
 let userScore = 0;
 let correctAnswers = [];
 let wrongAnswers = [];
@@ -136,13 +136,12 @@ const resetQuiz = () => {
   nextBtn.classList.remove("hide");
   restartBtn.classList.add("hide");
   resultBtn.classList.add("hide");
-  getQuestionNumber = 0;
+  questionNumber = 0;
   userScore = 0;
   correctAnswers = [];
   wrongAnswers = [];
   wrongAnswersLabels = [];
-  nextBtn.addEventListener("click", getAnswers);
-  return getQuestionNumber++;
+  return questionNumber++;
 };
 
 //function to check if value is "true"
@@ -174,18 +173,16 @@ let renderQuestion = (question) => {
     });
   };
   //render questions based on type
-  if (question.type === "trueFalse") {
-    //render radio buttons
-    createElements("radio");
-  } else if (question.type === "checkBox") {
-    //render boxes
+  if (question.type === "checkBox") {
+    //render checkboxes
     createElements("checkbox");
   } else if (question.type === "last") {
+    //render message to say quiz is finished
     let h3 = document.createElement("h3");
     h3.innerText = "See your results by pressing the button below.";
     questionContainer.append(h3);
   } else {
-    //default render which is for type multipleChoices
+    //default render which is for type multipleChoices and trueFalse
     createElements("radio");
   }
 };
@@ -193,17 +190,16 @@ let renderQuestion = (question) => {
 //function to render correct question based on current number
 let getQuestion = (number) => {
   renderQuestion(pinkFloydQuiz[number]);
-  return getQuestionNumber++;
+  return questionNumber++;
 };
 
 //function to store wrong answer labels
+//TODO change this function to store option text instead? why label? label is taken from option anyway
 const storeLabel = (arrayInput, arrayOutput) => {
   arrayInput.forEach((input) => {
     let labels = input.labels;
-    if (labels.length > 0) {
-      let labelText = labels[0].innerText;
-      arrayOutput.push(labelText);
-    }
+    let labelText = labels[0].innerText;
+    arrayOutput.push(labelText);
   });
 };
 
@@ -223,12 +219,12 @@ let getAnswers = () => {
       chosenArray.every(checkTrue) &&
       chosenArray.length === rightAnswers.length
     ) {
-      correctAnswers.push(pinkFloydQuiz[getQuestionNumber - 1]);
+      correctAnswers.push(pinkFloydQuiz[questionNumber - 1]);
       //add to score counter
       userScore++;
       console.log("rätt svar");
     } else {
-      wrongAnswers.push(pinkFloydQuiz[getQuestionNumber - 1]);
+      wrongAnswers.push(pinkFloydQuiz[questionNumber - 1]);
       console.log("fel svar");
       if (chosenAnswer.length >= 2) {
         //if several answers, save labels of picked answers in a separate array
@@ -247,10 +243,11 @@ let getAnswers = () => {
     //clear html and render next question
     questionContainer.innerHTML = "";
     answerContainer.innerHTML = "";
-    getQuestion(getQuestionNumber);
-    console.log(getQuestionNumber);
-    if (getQuestionNumber === pinkFloydQuiz.length) {
-      nextBtn.removeEventListener("click", getAnswers);
+    getQuestion(questionNumber);
+    console.log(questionNumber);
+
+    //show result button if last question of quiz
+    if (questionNumber === pinkFloydQuiz.length) {
       nextBtn.classList.add("hide");
       resultBtn.classList.remove("hide");
     }
@@ -270,6 +267,7 @@ let showOptions = (array, appendTarget) => {
   });
 };
 //show results function
+//TODO create helper function to avoid duplicate code, for correct.foreach and wrong.foreach
 let showResults = (correct, wrong) => {
   //show score
   let p = document.createElement("p");
@@ -327,10 +325,11 @@ let showResults = (correct, wrong) => {
 
 //start button event
 startBtn.addEventListener("click", () => {
+  alertContainer.innerHTML = "";
   renderQuestion(pinkFloydQuiz[0]);
   startBtn.classList.add("hide");
   nextBtn.classList.remove("hide");
-  return getQuestionNumber++;
+  return questionNumber++;
 });
 
 //next button event
