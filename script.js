@@ -2,8 +2,8 @@ const pinkFloydQuiz = [
   {
     question: "Pink floyd was formed in 1965.",
     answers: [
-      { option: "True", right: true },
-      { option: "False", right: false },
+      { option: "True", right: true, id: "true" },
+      { option: "False", right: false, id: "false" },
     ],
     type: "trueFalse",
   },
@@ -11,30 +11,30 @@ const pinkFloydQuiz = [
     question:
       "Which album features the iconic prism and rainbow artwork on its cover?",
     answers: [
-      { option: "Dark Side of the Moon", right: true },
-      { option: "Wish You Were Here", right: false },
-      { option: "The Division Bell", right: false },
-      { option: "The Wall", right: false },
+      { option: "Dark Side of the Moon", right: true, id: "darkSide" },
+      { option: "Wish You Were Here", right: false, id: "wishYou" },
+      { option: "The Division Bell", right: false, id: "theDivision" },
+      { option: "The Wall", right: false, id: "theWall" },
     ],
     type: "multipleChoices",
   },
   {
     question: "What is the title of Pink Floyd's longest studio album?",
     answers: [
-      { option: "Meddle", right: false },
-      { option: "Atom Heart Mother", right: false },
-      { option: "The Division Bell", right: false },
-      { option: "The Endless River", right: true },
+      { option: "Meddle", right: false, id: "meddle" },
+      { option: "Atom Heart Mother", right: false, id: "atomHeart" },
+      { option: "The Division Bell", right: false, id: "divisionBell" },
+      { option: "The Endless River", right: true, id: "theEndless" },
     ],
     type: "multipleChoices",
   },
   {
     question: "Which of the following played guitar in the band?",
     answers: [
-      { option: "Roger Waters", right: false },
-      { option: "David Gilmour", right: true },
-      { option: "Jimmy Page", right: false },
-      { option: "Syd Barrett", right: true },
+      { option: "Roger Waters", right: false, id: "roger" },
+      { option: "David Gilmour", right: true, id: "david" },
+      { option: "Jimmy Page", right: false, id: "jimmy" },
+      { option: "Syd Barrett", right: true, id: "syd" },
     ],
     type: "checkBox",
   },
@@ -42,10 +42,10 @@ const pinkFloydQuiz = [
     question:
       "Which member of Pink Floyd left the band in the early 1980s but rejoined for their final reunion concert in 2005?",
     answers: [
-      { option: "Syd Barrett", right: false },
-      { option: "David Gilmour", right: false },
-      { option: "Roger Waters", right: true },
-      { option: "Richard Wright", right: false },
+      { option: "Syd Barrett", right: false, id: "barrett" },
+      { option: "David Gilmour", right: false, id: "gilmour" },
+      { option: "Roger Waters", right: true, id: "waters" },
+      { option: "Richard Wright", right: false, id: "wright" },
     ],
     type: "multipleChoices",
   },
@@ -53,9 +53,13 @@ const pinkFloydQuiz = [
     question:
       "Which song begins with the famous line, 'Hello, is there anybody in there?'",
     answers: [
-      { option: "Comfortably Numb", right: true },
-      { option: "Another Brick in the Wall (Part 2)", right: false },
-      { option: "See Emily Play", right: false },
+      { option: "Comfortably Numb", right: true, id: "comfNumb" },
+      {
+        option: "Another Brick in the Wall (Part 2)",
+        right: false,
+        id: "anotherBrick",
+      },
+      { option: "See Emily Play", right: false, id: "seeEmily" },
     ],
     type: "multipleChoices",
   },
@@ -63,36 +67,40 @@ const pinkFloydQuiz = [
     question:
       "Pink Floyd's rock opera 'The Wall' explores themes of alienation and the impact of war.",
     answers: [
-      { option: "True", right: true },
-      { option: "False", right: false },
+      { option: "True", right: true, id: "true" },
+      { option: "False", right: false, id: "false" },
     ],
     type: "trueFalse",
   },
   {
     question: "The album cover of the album 'Meddle' features a flying pig?",
     answers: [
-      { option: "True", right: false },
-      { option: "False", right: true },
+      { option: "True", right: false, id: "true" },
+      { option: "False", right: true, id: "false" },
     ],
     type: "trueFalse",
   },
   {
     question: "What is the name of Pink Floyd's lead vocalist and guitarist?",
     answers: [
-      { option: "Syd Barrett", right: false },
-      { option: "Roger Waters", right: false },
-      { option: "David Gilmour", right: true },
-      { option: "Nick Mason", right: false },
+      { option: "Syd Barrett", right: false, id: "sydBarrett" },
+      { option: "Roger Waters", right: false, id: "rogerWaters" },
+      { option: "David Gilmour", right: true, id: "davidGilmour" },
+      { option: "Nick Mason", right: false, id: "nickMason" },
     ],
     type: "multipleChoices",
   },
   {
     question: "Which of the following albums were released in the 1960s?",
     answers: [
-      { option: "Atom Heart Mother", right: false },
-      { option: "The Piper at the Gates of Dawn", right: true },
-      { option: "A Saucerful of Secrets", right: true },
-      { option: "The Dark Side of the Moon", right: false },
+      { option: "Atom Heart Mother", right: false, id: "atomHeartMother" },
+      { option: "The Piper at the Gates of Dawn", right: true, id: "thePiper" },
+      { option: "A Saucerful of Secrets", right: true, id: "aSaucerful" },
+      {
+        option: "The Dark Side of the Moon",
+        right: false,
+        id: "darkSideOfTheMoon",
+      },
     ],
     type: "checkBox",
   },
@@ -137,12 +145,6 @@ const resetQuiz = () => {
   return getQuestionNumber++;
 };
 
-//function to turn a string into camelcase, copied from chat gpt, pray i dont need to use this
-function toCamelCase(inputString) {
-  return inputString
-    .toLowerCase()
-    .replace(/[-_\s]+(.)?/g, (_, c) => c.toUpperCase());
-}
 //function to check if value is "true"
 const checkTrue = (index) => {
   return index.value === "true";
@@ -163,7 +165,7 @@ let renderQuestion = (question) => {
       let input = document.createElement("input");
       input.type = typeInput;
       input.name = "option";
-      input.id = toCamelCase(option.option.toString());
+      input.id = option.id;
       input.value = option.right;
       label.htmlFor = input.id;
       label.innerText = option.option;
@@ -263,14 +265,13 @@ let showOptions = (array, appendTarget) => {
     let p = document.createElement("p");
     p.innerText = `Correct answer: ${answer.option}`;
     appendTarget.append(p);
-    if (p.parentElement.parentElement.classList.contains("ulCorrect")) {
-      p.classList.add("green");
-    }
+    p.classList.add("green");
     console.log(answer.option);
   });
 };
 //show results function
 let showResults = (correct, wrong) => {
+  //show score
   let p = document.createElement("p");
   p.innerText = `You answered correctly on ${userScore} out of 10 questions.`;
   if (userScore > 7.5) {
@@ -290,6 +291,7 @@ let showResults = (correct, wrong) => {
   ulWrong.classList.add("ulWrong");
   h2Wrong.innerText = "Wrong answers";
   questionContainer.append(h2Correct, ulCorrect, h2Wrong, ulWrong);
+  //show correct answers
   correct.forEach((answer) => {
     let li = document.createElement("li");
     ulCorrect.append(li);
@@ -298,6 +300,7 @@ let showResults = (correct, wrong) => {
     li.append(p);
     showOptions(answer, li);
   });
+  //show wrong answers
   wrong.forEach((answer, index) => {
     let li = document.createElement("li");
     ulWrong.append(li);
@@ -306,7 +309,12 @@ let showResults = (correct, wrong) => {
     li.append(p);
     showOptions(answer, li);
     let p2 = document.createElement("p");
-    p2.innerText = `Your answer: ${wrongAnswersLabels[index]}`;
+    let stringAnswer = wrongAnswersLabels[index];
+    if (Array.isArray(stringAnswer)) {
+      p2.innerText = `Your answer: ${stringAnswer.join(", ")}`;
+    } else {
+      p2.innerText = `Your answer: ${stringAnswer}`;
+    }
     p2.classList.add("red");
     li.append(p2);
   });
