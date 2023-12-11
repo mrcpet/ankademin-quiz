@@ -1,0 +1,66 @@
+.hide {
+  display: none;
+}
+.green {
+  color: green;
+}
+.orange {
+  color: orange;
+}
+.red {
+  color: red;
+}
+.quiz-question {
+  @include containerBorder($jasper-2);
+  background-color: $lemon-chiffon;
+}
+body {
+  color: $rich-black;
+  background-color: $lemon-chiffon;
+  font-family: monospace;
+  p,
+  label {
+    font-size: 1.25rem;
+  }
+  button {
+    font-family: monospace;
+    @include button;
+  }
+  ul {
+    padding: 0;
+    list-style: none;
+    li:not(:last-child) {
+      border-bottom: 1px solid $rich-black;
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+  h1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: $rich-black;
+  }
+}
+input[type="radio"][name="option"],
+input[type="checkbox"][name="option"] {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+.dark-mode {
+  transition: background-color 0.25s, color 0.25s;
+  background-color: $oxford-blue;
+  color: $champagne-pink;
+  button {
+    @include buttonDark;
+  }
+  .quiz-question {
+    @include containerBorder($blue-munsell);
+    background-color: $oxford-blue;
+  }
+  h1 {
+    color: $champagne-pink;
+  }
+  li:not(:last-child) {
+      border-bottom: 1px solid $champagne-pink;
+  }
+}

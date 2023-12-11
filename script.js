@@ -119,6 +119,7 @@ const restartBtn = document.querySelector("#restartBtn");
 const nextBtn = document.querySelector("#nextBtn");
 const resultBtn = document.querySelector("#resultBtn");
 const lightDarkBtn = document.querySelector("#lightDarkBtn");
+lightDarkBtn.innerText = "Toggle Dark Mode";
 
 //variables needed
 let questionNumber = 0;
@@ -127,15 +128,22 @@ let correctAnswers = [];
 let wrongAnswers = [];
 let wrongAnswersLabels = [];
 
+//toggle buttons function
+const toggleButton = (buttonArray) => {
+  buttonArray.forEach((button) => {
+    if (button.classList.contains("hide")) {
+      button.classList.remove("hide");
+    } else {
+      button.classList.add("hide");
+    }
+  });
+};
 //reset quiz function
 const resetQuiz = () => {
   questionContainer.innerHTML = "";
   answerContainer.innerHTML = "";
   renderQuestion(pinkFloydQuiz[0]);
-  startBtn.classList.add("hide");
-  nextBtn.classList.remove("hide");
-  restartBtn.classList.add("hide");
-  resultBtn.classList.add("hide");
+  toggleButton([nextBtn, restartBtn]);
   questionNumber = 0;
   userScore = 0;
   correctAnswers = [];
@@ -194,7 +202,6 @@ let getQuestion = (number) => {
 };
 
 //function to store wrong answer labels
-//TODO change this function to store option text instead? why label? label is taken from option anyway
 const storeLabel = (arrayInput, arrayOutput) => {
   arrayInput.forEach((input) => {
     let labels = input.labels;
@@ -248,8 +255,7 @@ let getAnswers = () => {
 
     //show result button if last question of quiz
     if (questionNumber === pinkFloydQuiz.length) {
-      nextBtn.classList.add("hide");
-      resultBtn.classList.remove("hide");
+      toggleButton([nextBtn, resultBtn]);
     }
   } else {
     alert("Please pick your answer.");
@@ -271,24 +277,45 @@ let showOptions = (array, appendTarget) => {
 let showResults = (correct, wrong) => {
   //show score
   let p = document.createElement("p");
-  p.innerText = `You answered correctly on ${userScore} out of 10 questions.`;
+  let resultMessage = document.createElement("span").innerText;
+  p.innerText = `You answered correctly on ${userScore} out of 10 questions. `;
   if (userScore > 7.5) {
     p.classList.add("green");
-  } else if (userScore > 5 && userScore < 7.5) {
+    resultMessage = "Well fucking done mate!";
+  } else if (userScore >= 5 && userScore < 7.5) {
     p.classList.add("orange");
+    resultMessage = "Good job!";
   } else {
     p.classList.add("red");
+    resultMessage = "Fail!";
   }
   questionContainer.append(p);
-  let h2Correct = document.createElement("h2");
+  p.append(resultMessage);
+  let btnCorrect = document.createElement("button");
   let ulCorrect = document.createElement("ul");
+  ulCorrect.classList.add("hide");
   ulCorrect.classList.add("ulCorrect");
-  h2Correct.innerText = "Correct answers";
-  let h2Wrong = document.createElement("h2");
+  btnCorrect.innerText = "Correct answers";
+  btnCorrect.addEventListener("click", () => {
+    if (ulCorrect.classList.contains("hide")) {
+      ulCorrect.classList.remove("hide");
+    } else {
+      ulCorrect.classList.add("hide");
+    }
+  });
+  let btnWrong = document.createElement("button");
   let ulWrong = document.createElement("ul");
+  ulWrong.classList.add("hide");
   ulWrong.classList.add("ulWrong");
-  h2Wrong.innerText = "Wrong answers";
-  questionContainer.append(h2Correct, ulCorrect, h2Wrong, ulWrong);
+  btnWrong.innerText = "Wrong answers";
+  btnWrong.addEventListener("click", () => {
+    if (ulWrong.classList.contains("hide")) {
+      ulWrong.classList.remove("hide");
+    } else {
+      ulWrong.classList.add("hide");
+    }
+  });
+  questionContainer.append(btnCorrect, ulCorrect, btnWrong, ulWrong);
   //show correct answers
   correct.forEach((answer) => {
     let li = document.createElement("li");
@@ -327,8 +354,7 @@ let showResults = (correct, wrong) => {
 startBtn.addEventListener("click", () => {
   alertContainer.innerHTML = "";
   renderQuestion(pinkFloydQuiz[0]);
-  startBtn.classList.add("hide");
-  nextBtn.classList.remove("hide");
+  toggleButton([startBtn, nextBtn]);
   return questionNumber++;
 });
 
@@ -340,7 +366,7 @@ resultBtn.addEventListener("click", () => {
   questionContainer.innerHTML = "";
   answerContainer.innerHTML = "";
   showResults(correctAnswers, wrongAnswers);
-  restartBtn.classList.remove("hide");
+  toggleButton([restartBtn, resultBtn]);
 });
 
 //restart button event
@@ -349,4 +375,8 @@ restartBtn.addEventListener("click", resetQuiz);
 //dark mode event
 lightDarkBtn.addEventListener("click", () => {
   document.body.classList.toggle("dark-mode");
+  lightDarkBtn.innerText = "Toggle Dark Mode";
+  if (document.body.classList.contains("dark-mode")) {
+    lightDarkBtn.innerText = "Toggle Light Mode";
+  }
 });

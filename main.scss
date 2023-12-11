@@ -1,25 +1,7 @@
 @import "partials/variables";
-// * {
-//   outline: 1px solid red;
-// }
-.hide {
-  display: none;
-}
-.green {
-  color: green;
-}
-.orange {
-  color: orange;
-}
-.red {
-  color: red;
-}
+@import "partials/mixins";
+@import "partials/global";
 
-.dark-mode {
-  transition: background-color 0.25s, color 0.25s;
-  background-color: #000;
-  color: #fff;
-}
 main {
   display: flex;
   justify-content: center;
@@ -28,9 +10,15 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
     .quiz-question {
+      padding: 1rem;
       min-height: 10rem;
       max-width: 20rem;
+      text-align: center;
+      button {
+        margin-bottom: 1rem;
+      }
     }
     .quiz-answers {
       max-width: 20rem;
