@@ -1,7 +1,9 @@
 @import "partials/variables";
 @import "partials/mixins";
 @import "partials/global";
+@import "partials/dark-mode";
 
+//layout and positioning styles
 main {
   display: flex;
   justify-content: center;
@@ -24,6 +26,9 @@ main {
       max-width: 20rem;
       display: flex;
       flex-direction: column;
+      .options-container {
+        margin-bottom: 0.25rem;
+      }
     }
     .quiz-btns {
       max-width: 20rem;

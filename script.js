@@ -2,8 +2,8 @@ const pinkFloydQuiz = [
   {
     question: "Pink floyd was formed in 1965.",
     answers: [
-      { option: "True", right: true, id: "true" },
-      { option: "False", right: false, id: "false" },
+      { option: "True", right: true, id: "q01a1" },
+      { option: "False", right: false, id: "q01a2" },
     ],
     type: "trueFalse",
   },
@@ -11,30 +11,30 @@ const pinkFloydQuiz = [
     question:
       "Which album features the iconic prism and rainbow artwork on its cover?",
     answers: [
-      { option: "Dark Side of the Moon", right: true, id: "darkSide" },
-      { option: "Wish You Were Here", right: false, id: "wishYou" },
-      { option: "The Division Bell", right: false, id: "theDivision" },
-      { option: "The Wall", right: false, id: "theWall" },
+      { option: "Dark Side of the Moon", right: true, id: "q02a1" },
+      { option: "Wish You Were Here", right: false, id: "q02a2" },
+      { option: "The Division Bell", right: false, id: "q02a3" },
+      { option: "The Wall", right: false, id: "q02a4" },
     ],
     type: "multipleChoices",
   },
   {
     question: "What is the title of Pink Floyd's longest studio album?",
     answers: [
-      { option: "Meddle", right: false, id: "meddle" },
-      { option: "Atom Heart Mother", right: false, id: "atomHeart" },
-      { option: "The Division Bell", right: false, id: "divisionBell" },
-      { option: "The Endless River", right: true, id: "theEndless" },
+      { option: "Meddle", right: false, id: "q03a1" },
+      { option: "Atom Heart Mother", right: false, id: "q03a2" },
+      { option: "The Division Bell", right: false, id: "q03a3" },
+      { option: "The Endless River", right: true, id: "q03a4" },
     ],
     type: "multipleChoices",
   },
   {
     question: "Which of the following played guitar in the band?",
     answers: [
-      { option: "Roger Waters", right: false, id: "roger" },
-      { option: "David Gilmour", right: true, id: "david" },
-      { option: "Jimmy Page", right: false, id: "jimmy" },
-      { option: "Syd Barrett", right: true, id: "syd" },
+      { option: "Roger Waters", right: false, id: "q04a1" },
+      { option: "David Gilmour", right: true, id: "q04a2" },
+      { option: "Jimmy Page", right: false, id: "q04a3" },
+      { option: "Syd Barrett", right: true, id: "q04a4" },
     ],
     type: "checkBox",
   },
@@ -42,10 +42,10 @@ const pinkFloydQuiz = [
     question:
       "Which member of Pink Floyd left the band in the early 1980s but rejoined for their final reunion concert in 2005?",
     answers: [
-      { option: "Syd Barrett", right: false, id: "barrett" },
-      { option: "David Gilmour", right: false, id: "gilmour" },
-      { option: "Roger Waters", right: true, id: "waters" },
-      { option: "Richard Wright", right: false, id: "wright" },
+      { option: "Syd Barrett", right: false, id: "q05a1" },
+      { option: "David Gilmour", right: false, id: "q05a2" },
+      { option: "Roger Waters", right: true, id: "q05a3" },
+      { option: "Richard Wright", right: false, id: "q05a4" },
     ],
     type: "multipleChoices",
   },
@@ -53,13 +53,13 @@ const pinkFloydQuiz = [
     question:
       "Which song begins with the famous line, 'Hello, is there anybody in there?'",
     answers: [
-      { option: "Comfortably Numb", right: true, id: "comfNumb" },
+      { option: "Comfortably Numb", right: true, id: "q06a1" },
       {
-        option: "Another Brick in the Wall (Part 2)",
+        option: "Time",
         right: false,
-        id: "anotherBrick",
+        id: "q06a2",
       },
-      { option: "See Emily Play", right: false, id: "seeEmily" },
+      { option: "See Emily Play", right: false, id: "q06a3" },
     ],
     type: "multipleChoices",
   },
@@ -67,39 +67,39 @@ const pinkFloydQuiz = [
     question:
       "Pink Floyd's rock opera 'The Wall' explores themes of alienation and the impact of war.",
     answers: [
-      { option: "True", right: true, id: "true" },
-      { option: "False", right: false, id: "false" },
+      { option: "True", right: true, id: "q07a1" },
+      { option: "False", right: false, id: "q07a2" },
     ],
     type: "trueFalse",
   },
   {
     question: "The album cover of the album 'Meddle' features a flying pig?",
     answers: [
-      { option: "True", right: false, id: "true" },
-      { option: "False", right: true, id: "false" },
+      { option: "True", right: false, id: "q08a1" },
+      { option: "False", right: true, id: "q08a2" },
     ],
     type: "trueFalse",
   },
   {
     question: "What is the name of Pink Floyd's lead vocalist and guitarist?",
     answers: [
-      { option: "Syd Barrett", right: false, id: "sydBarrett" },
-      { option: "Roger Waters", right: false, id: "rogerWaters" },
-      { option: "David Gilmour", right: true, id: "davidGilmour" },
-      { option: "Nick Mason", right: false, id: "nickMason" },
+      { option: "Syd Barrett", right: false, id: "q09a1" },
+      { option: "Roger Waters", right: false, id: "q09a2" },
+      { option: "David Gilmour", right: true, id: "q09a3" },
+      { option: "Nick Mason", right: false, id: "q09a4" },
     ],
     type: "multipleChoices",
   },
   {
     question: "Which of the following albums were released in the 1960s?",
     answers: [
-      { option: "Atom Heart Mother", right: false, id: "atomHeartMother" },
-      { option: "The Piper at the Gates of Dawn", right: true, id: "thePiper" },
-      { option: "A Saucerful of Secrets", right: true, id: "aSaucerful" },
+      { option: "Atom Heart Mother", right: false, id: "q10a1" },
+      { option: "The Piper at the Gates of Dawn", right: true, id: "q10a2" },
+      { option: "A Saucerful of Secrets", right: true, id: "a10a3" },
       {
         option: "The Dark Side of the Moon",
         right: false,
-        id: "darkSideOfTheMoon",
+        id: "q10a4",
       },
     ],
     type: "checkBox",
@@ -138,10 +138,16 @@ const toggleButton = (buttonArray) => {
     }
   });
 };
+
+// clear container and add logo function
+const clearContainers = () => {
+  questionContainer.innerHTML =
+    "<img src='assets/logo-pfquiz-circle.png' alt='logo'>";
+  answerContainer.innerHTML = "";
+};
 //reset quiz function
 const resetQuiz = () => {
-  questionContainer.innerHTML = "";
-  answerContainer.innerHTML = "";
+  clearContainers();
   renderQuestion(pinkFloydQuiz[0]);
   toggleButton([nextBtn, restartBtn]);
   questionNumber = 0;
@@ -163,7 +169,7 @@ let renderQuestion = (question) => {
   let h2 = document.createElement("h2");
   h2.innerText = question.question;
   questionContainer.append(h2);
-  //function to create elements
+  //function to create elements for options
   let createElements = (typeInput) => {
     question.answers.forEach((option) => {
       let div = document.createElement("div");
@@ -248,8 +254,7 @@ let getAnswers = () => {
     console.log(wrongAnswersLabels);
 
     //clear html and render next question
-    questionContainer.innerHTML = "";
-    answerContainer.innerHTML = "";
+    clearContainers();
     getQuestion(questionNumber);
     console.log(questionNumber);
 
@@ -273,15 +278,15 @@ let showOptions = (array, appendTarget) => {
   });
 };
 //show results function
-//TODO create helper function to avoid duplicate code, for correct.foreach and wrong.foreach
+//TODO create helper function to avoid duplicate code, for correct.foreach and wrong.foreach || break down showresults function into several smaller functions
 let showResults = (correct, wrong) => {
-  //show score
+  //show score and message
   let p = document.createElement("p");
   let resultMessage = document.createElement("span").innerText;
   p.innerText = `You answered correctly on ${userScore} out of 10 questions. `;
   if (userScore > 7.5) {
     p.classList.add("green");
-    resultMessage = "Well fucking done mate!";
+    resultMessage = "Well done mate!";
   } else if (userScore >= 5 && userScore < 7.5) {
     p.classList.add("orange");
     resultMessage = "Good job!";
@@ -291,6 +296,8 @@ let showResults = (correct, wrong) => {
   }
   questionContainer.append(p);
   p.append(resultMessage);
+
+  //create buttons and lists to show all correct and wrong answers
   let btnCorrect = document.createElement("button");
   let ulCorrect = document.createElement("ul");
   ulCorrect.classList.add("hide");
@@ -316,6 +323,7 @@ let showResults = (correct, wrong) => {
     }
   });
   questionContainer.append(btnCorrect, ulCorrect, btnWrong, ulWrong);
+
   //show correct answers
   correct.forEach((answer) => {
     let li = document.createElement("li");
@@ -325,6 +333,7 @@ let showResults = (correct, wrong) => {
     li.append(p);
     showOptions(answer, li);
   });
+
   //show wrong answers
   wrong.forEach((answer, index) => {
     let li = document.createElement("li");
@@ -343,11 +352,6 @@ let showResults = (correct, wrong) => {
     p2.classList.add("red");
     li.append(p2);
   });
-  // wrongAnswersLabels.forEach((answer) => {
-  //   let p = document.createElement("p");
-  //   p.innerText = answer;
-  //   ulWrong.append(p);
-  // })
 };
 
 //start button event
@@ -363,8 +367,7 @@ nextBtn.addEventListener("click", getAnswers);
 
 //result button event
 resultBtn.addEventListener("click", () => {
-  questionContainer.innerHTML = "";
-  answerContainer.innerHTML = "";
+  clearContainers();
   showResults(correctAnswers, wrongAnswers);
   toggleButton([restartBtn, resultBtn]);
 });

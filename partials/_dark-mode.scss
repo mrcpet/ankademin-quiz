@@ -1,0 +1,23 @@
+.dark-mode {
+  transition: background-color 0.25s, color 0.25s;
+  background-color: $oxford-blue;
+  color: $champagne-pink;
+  button {
+    @include buttonDark;
+  }
+  .quiz-question {
+    @include containerBorder($blue-munsell);
+    background-color: $oxford-blue;
+    img {
+         width: 25%;
+         @include containerBorder($blue-munsell);
+         border-radius: 50%;
+       }
+  }
+  h1 {
+    color: $champagne-pink;
+  }
+  li:not(:last-child) {
+    border-bottom: 1px solid $champagne-pink;
+  }
+}
