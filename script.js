@@ -164,7 +164,7 @@ const checkTrue = (index) => {
 };
 
 //function to render question into DOM
-let renderQuestion = (question) => {
+const renderQuestion = (question) => {
   //render question title
   let h2 = document.createElement("h2");
   h2.innerText = question.question;
@@ -202,7 +202,7 @@ let renderQuestion = (question) => {
 };
 
 //function to render correct question based on current number
-let getQuestion = (number) => {
+const getQuestion = (number) => {
   renderQuestion(pinkFloydQuiz[number]);
   return questionNumber++;
 };
@@ -217,7 +217,7 @@ const storeLabel = (arrayInput, arrayOutput) => {
 };
 
 //function to count score and store answers
-let getAnswers = () => {
+const getAnswers = () => {
   // select all chosen answers and all correct answers
   let chosenAnswer = document.querySelectorAll(
     "input[type='checkbox']:checked, input[type='radio']:checked"
@@ -227,7 +227,6 @@ let getAnswers = () => {
     //turn node list into an array
     let chosenArray = Array.from(chosenAnswer);
     //push question into corresponding array
-    //TODO clear console logs
     if (
       chosenArray.every(checkTrue) &&
       chosenArray.length === rightAnswers.length
@@ -235,10 +234,8 @@ let getAnswers = () => {
       correctAnswers.push(pinkFloydQuiz[questionNumber - 1]);
       //add to score counter
       userScore++;
-      console.log("rätt svar");
     } else {
       wrongAnswers.push(pinkFloydQuiz[questionNumber - 1]);
-      console.log("fel svar");
       if (chosenAnswer.length >= 2) {
         //if several answers, save labels of picked answers in a separate array
         let labelsArray = [];
@@ -249,38 +246,39 @@ let getAnswers = () => {
         storeLabel(chosenAnswer, wrongAnswersLabels);
       }
     }
-    console.log(correctAnswers);
-    console.log(wrongAnswers);
-    console.log(wrongAnswersLabels);
-
     //clear html and render next question
     clearContainers();
     getQuestion(questionNumber);
-    console.log(questionNumber);
 
     //show result button if last question of quiz
     if (questionNumber === pinkFloydQuiz.length) {
       toggleButton([nextBtn, resultBtn]);
     }
   } else {
-    alert("Please pick your answer.");
+    //tell user to pick an answer if none are selected
+    let alertMsg = answerContainer.querySelector("p");
+    if (!alertMsg) {
+      let p = document.createElement("p");
+      p.innerText = "Pick an answer!";
+      p.classList.add("red");
+      answerContainer.prepend(p);
+    }
   }
 };
+
 //filter and show correct answers for each question in the list
-let showOptions = (array, appendTarget) => {
+const showOptions = (array, appendTarget) => {
   let filterAnswers = array.answers.filter((option) => option.right === true);
   filterAnswers.forEach((answer) => {
     let p = document.createElement("p");
     p.innerText = `Correct answer: ${answer.option}`;
     appendTarget.append(p);
     p.classList.add("green");
-    console.log(answer.option);
   });
 };
-//show results function
-//TODO create helper function to avoid duplicate code, for correct.foreach and wrong.foreach || break down showresults function into several smaller functions
-let showResults = (correct, wrong) => {
-  //show score and message
+
+//print final score and message function
+const finalScore = () => {
   let p = document.createElement("p");
   let resultMessage = document.createElement("span").innerText;
   p.innerText = `You answered correctly on ${userScore} out of 10 questions. `;
@@ -296,13 +294,20 @@ let showResults = (correct, wrong) => {
   }
   questionContainer.append(p);
   p.append(resultMessage);
+};
 
-  //create buttons and lists to show all correct and wrong answers
+//show results function
+const showResults = (correct, wrong) => {
+  finalScore();
+
+  //create buttons and lists to show all correct answers
   let btnCorrect = document.createElement("button");
   let ulCorrect = document.createElement("ul");
   ulCorrect.classList.add("hide");
   ulCorrect.classList.add("ulCorrect");
   btnCorrect.innerText = "Correct answers";
+
+  //event listener to show/hide list on click
   btnCorrect.addEventListener("click", () => {
     if (ulCorrect.classList.contains("hide")) {
       ulCorrect.classList.remove("hide");
@@ -310,11 +315,15 @@ let showResults = (correct, wrong) => {
       ulCorrect.classList.add("hide");
     }
   });
+
+  //create buttons and lists to show all wrong answers
   let btnWrong = document.createElement("button");
   let ulWrong = document.createElement("ul");
   ulWrong.classList.add("hide");
   ulWrong.classList.add("ulWrong");
   btnWrong.innerText = "Wrong answers";
+
+  //event listener to show/hide list on click
   btnWrong.addEventListener("click", () => {
     if (ulWrong.classList.contains("hide")) {
       ulWrong.classList.remove("hide");

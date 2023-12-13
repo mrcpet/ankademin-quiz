@@ -3,13 +3,13 @@
   display: none;
 }
 .green {
-  color: green;
+  color: rgb(17, 210, 17);
 }
 .orange {
-  color: orange;
+  color: rgb(250, 168, 16);
 }
 .red {
-  color: red;
+  color: rgb(248, 17, 17);
 }
 .quiz-question {
   @include containerBorder($jasper-2);
@@ -26,7 +26,7 @@ body {
   font-family: monospace;
   p,
   label {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
     margin-left: 0.5rem;
   }
   button {
@@ -47,10 +47,11 @@ body {
     font-family: "Major Mono Display", monospace;
     font-size: 1.7rem;
     color: $rich-black;
+    margin: 0;  
   }
 }
 input[type="radio"][name="option"],
 input[type="checkbox"][name="option"] {
-  height: 1.25rem;
-  width: 1.25rem;
+  height: 1.125rem;
+  width: 1.125rem;
 }
